@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://models/batman/batman.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://models/batman/texture/batman_CO_1.tga" type="Texture" id=2]
+[ext_resource path="res://Scenes/Scripts/Player.gd" type="Script" id=3]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 5.43576, 15.2837, 5.74905 )
+
+[sub_resource type="Skin" id=4]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="AnimationNodeBlendTree" id=3]
+graph_offset = Vector2( -248.553, 52.2353 )
+nodes/output/position = Vector2( 282.353, 94.1176 )
+
+[node name="Player" type="KinematicBody"]
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0214581, 14.9597, 0 )
+shape = SubResource( 2 )
+
+[node name="Pivot" type="Spatial" parent="."]
+
+[node name="Skin" type="MeshInstance" parent="Pivot"]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
+mesh = ExtResource( 1 )
+skin = SubResource( 4 )
+software_skinning_transform_normals = false
+material/0 = SubResource( 1 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
